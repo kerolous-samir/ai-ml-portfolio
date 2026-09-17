@@ -1,0 +1,72 @@
+name: Validate Notebooks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Notebook schema & secret scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install tooling
+        run: pip install --quiet nbformat
+
+      - name: Validate every notebook against the nbformat schema
+        run: |
+          python - <<'PY'
+          import glob, sys
+          import nbformat
+
+          failed = False
+          for path in sorted(glob.glob("*/notebook.ipynb")):
+              try:
+                  nb = nbformat.read(path, as_version=4)
+                  nbformat.validate(nb)
+                  code = sum(1 for c in nb.cells if c.cell_type == "code")
+                  print(f"OK    {path}  ({len(nb.cells)} cells, {code} code)")
+              except Exception as exc:
+                  print(f"FAIL  {path}: {exc}")
+                  failed = True
+          sys.exit(1 if failed else 0)
+          PY
+
+      - name: Scan for committed credentials
+        run: |
+          python - <<'PY'
+          import glob, json, re, sys
+
+          PATTERNS = {
+              "Hugging Face token": r"hf_[A-Za-z0-9]{20,}",
+              "OpenAI key":         r"sk-[A-Za-z0-9_\-]{20,}",
+              "AWS access key":     r"AKIA[0-9A-Z]{16}",
+              "GitHub token":       r"gh[pousr]_[A-Za-z0-9]{30,}",
+          }
+
+          found = False
+          for path in sorted(glob.glob("*/notebook.ipynb")):
+              nb = json.loads(open(path, encoding="utf-8").read())
+              chunks = []
+              for cell in nb["cells"]:
+                  chunks.append("".join(cell["source"]))
+                  for out in cell.get("outputs", []):
+                      text = out.get("data", {}).get("text/plain") or out.get("text") or []
+                      chunks.append("".join(text) if isinstance(text, list) else str(text))
+              blob = "\n".join(chunks)
+              for name, pattern in PATTERNS.items():
+                  if re.search(pattern, blob):
+                      print(f"SECRET  {path}: possible {name}")
+                      found = True
+          print("No credentials detected." if not found else "Credentials detected - failing.")
+          sys.exit(1 if found else 0)
+          PY

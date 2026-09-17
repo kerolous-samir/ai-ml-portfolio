@@ -1,0 +1,6 @@
+# Count notebooks as the repository's language, not the bundled HTML reports
+*.html    linguist-documentation
+*.ipynb   linguist-language=Jupyter\ Notebook
+
+# Treat notebooks as text so diffs are meaningful
+*.ipynb   text eol=lf

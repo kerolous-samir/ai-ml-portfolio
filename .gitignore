@@ -1,0 +1,51 @@
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.venv/
+venv/
+env/
+ENV/
+.env
+.env.*
+
+# Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+profile_default/
+ipython_config.py
+
+# Data — datasets are not redistributed with this repository
+*.csv
+*.xlsx
+*.xls
+*.parquet
+*.npy
+*.npz
+data/
+datasets/
+
+# Trained model artefacts
+*.pkl
+*.joblib
+*.h5
+*.keras
+*.pb
+saved_model/
+checkpoints/
+
+# Secrets
+secrets.json
+credentials.json
+*.pem
+*.key
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
