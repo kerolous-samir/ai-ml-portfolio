@@ -8917,7 +8917,7 @@ Sample predictions on the test set: [3299.81232594 3365.48809536 2410.96241784 1
 <span class="c1"># Hugging Face API token.  Uncomment and run the lines below when</span>
 <span class="c1"># you wish to upload your backend to a space.</span>
 
-<span class="n">hf_token</span> <span class="o">=</span> <span class="s2">"&lt;YOUR_HF_TOKEN&gt;lt;YOUR_HF_TOKEN&lt;YOUR_HF_TOKEN&gt;gt;"</span>  <span class="c1"># provided token</span>
+<span class="n">hf_token</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"HF_TOKEN"</span><span class="p">]</span>  <span class="c1"># never hard-code credentials; export HF_TOKEN=... before running</span>
 <span class="n">login</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">hf_token</span><span class="p">)</span>
 <span class="n">api</span> <span class="o">=</span> <span class="n">HfApi</span><span class="p">()</span>
 <span class="n">username</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">whoami</span><span class="p">()[</span><span class="s1">'name'</span><span class="p">]</span>
