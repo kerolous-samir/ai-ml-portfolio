@@ -107,4 +107,4 @@ This is a deliberately **low-resource** implementation, and the evaluation refle
 | File | Description |
 |------|-------------|
 | [`notebook.ipynb`](notebook.ipynb) | Full executed RAG pipeline with ablations |
-| [`report.html`](report.html) | Standalone HTML report |
+| [`report.html`](report.html) | Rendered HTML report — **[view live](https://kerolous-samir.github.io/ai-ml-portfolio/07-medical-rag-assistant/report.html)** |

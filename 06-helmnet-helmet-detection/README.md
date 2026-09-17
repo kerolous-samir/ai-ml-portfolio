@@ -93,4 +93,4 @@ for pretrained features.
 | File | Description |
 |------|-------------|
 | [`notebook.ipynb`](notebook.ipynb) | Full executed pipeline with all four model variants |
-| [`report.html`](report.html) | Standalone HTML report |
+| [`report.html`](report.html) | Rendered HTML report — **[view live](https://kerolous-samir.github.io/ai-ml-portfolio/06-helmnet-helmet-detection/report.html)** |

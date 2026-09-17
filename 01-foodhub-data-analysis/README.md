@@ -73,4 +73,4 @@ operational recommendations.
 | File | Description |
 |------|-------------|
 | [`notebook.ipynb`](notebook.ipynb) | Full executed analysis with all charts and output |
-| [`report.html`](report.html) | Standalone HTML report — open in any browser |
+| [`report.html`](report.html) | Rendered HTML report — **[view live](https://kerolous-samir.github.io/ai-ml-portfolio/01-foodhub-data-analysis/report.html)** |

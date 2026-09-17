@@ -102,4 +102,4 @@ expensive false negatives) and by gathering more failure-event data.
 | File | Description |
 |------|-------------|
 | [`notebook.ipynb`](notebook.ipynb) | Full executed analysis, NN implementation and ablation |
-| [`report.html`](report.html) | Standalone HTML report |
+| [`report.html`](report.html) | Rendered HTML report — **[view live](https://kerolous-samir.github.io/ai-ml-portfolio/04-renewind-predictive-maintenance/report.html)** |

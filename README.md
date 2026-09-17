@@ -5,6 +5,7 @@
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-FF6F00?logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Live Reports](https://img.shields.io/badge/Live-Reports-2ea44f?logo=github)](https://kerolous-samir.github.io/ai-ml-portfolio/)
 
 End-to-end applied machine learning projects spanning **exploratory data analysis, supervised
 learning, ensemble methods, neural networks, computer vision, model deployment, and
@@ -83,8 +84,20 @@ Each project folder contains the same three artefacts:
 GitHub renders `.ipynb` files natively — just click any `notebook.ipynb` above.
 
 If a large notebook times out in GitHub's viewer, open it through
-[nbviewer](https://nbviewer.org/) by pasting the file URL, or download `report.html`
-and open it locally.
+[nbviewer](https://nbviewer.org/) by pasting the file URL.
+
+Every project also ships a rendered HTML report hosted on GitHub Pages — no download,
+no Python, just a link:
+
+| Project | Live report |
+|---------|-------------|
+| FoodHub Order Analysis | [view](https://kerolous-samir.github.io/ai-ml-portfolio/01-foodhub-data-analysis/report.html) |
+| AllLife Bank Loan Targeting | [view](https://kerolous-samir.github.io/ai-ml-portfolio/02-alllife-bank-loan-targeting/report.html) |
+| EasyVisa Approval Prediction | [view](https://kerolous-samir.github.io/ai-ml-portfolio/03-easyvisa-approval-prediction/report.html) |
+| ReneWind Predictive Maintenance | [view](https://kerolous-samir.github.io/ai-ml-portfolio/04-renewind-predictive-maintenance/report.html) |
+| SuperKart Sales Forecasting | [view](https://kerolous-samir.github.io/ai-ml-portfolio/05-superkart-sales-forecasting/report.html) |
+| HelmNet Helmet Detection | [view](https://kerolous-samir.github.io/ai-ml-portfolio/06-helmnet-helmet-detection/report.html) |
+| Medical RAG Assistant | [view](https://kerolous-samir.github.io/ai-ml-portfolio/07-medical-rag-assistant/report.html) |
 
 ## Running Locally
 

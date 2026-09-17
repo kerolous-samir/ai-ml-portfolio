@@ -106,4 +106,4 @@ Certified (1)      0.77      0.87      0.82      5105
 | File | Description |
 |------|-------------|
 | [`notebook.ipynb`](notebook.ipynb) | Full executed analysis, bake-off and tuning |
-| [`report.html`](report.html) | Standalone HTML report |
+| [`report.html`](report.html) | Rendered HTML report — **[view live](https://kerolous-samir.github.io/ai-ml-portfolio/03-easyvisa-approval-prediction/report.html)** |

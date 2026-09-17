@@ -118,4 +118,4 @@ creates the backend (Docker SDK) and frontend (Streamlit SDK) Spaces and uploads
 | File | Description |
 |------|-------------|
 | [`notebook.ipynb`](notebook.ipynb) | Full pipeline — EDA through to deployment |
-| [`report.html`](report.html) | Standalone HTML report |
+| [`report.html`](report.html) | Rendered HTML report — **[view live](https://kerolous-samir.github.io/ai-ml-portfolio/05-superkart-sales-forecasting/report.html)** |
