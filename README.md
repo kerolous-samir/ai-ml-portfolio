@@ -15,19 +15,45 @@ Every project follows the same lifecycle: business framing → data quality asse
 preprocessing → model building → hyperparameter tuning → evaluation against a business-aligned
 metric → actionable recommendations.
 
+### 🟢 Try the deployed model right now
+
+Project 05 is live in production on Hugging Face Spaces. No signup, no clone:
+
+```bash
+curl -X POST https://kerolous-samir-superkart-backend.hf.space/predict \
+  -H "Content-Type: application/json" \
+  -d '{"Product_Id":"FD6114","Product_Weight":12.5,"Product_Sugar_Content":"low sugar",
+       "Product_Allocated_Area":0.03,"Product_Type":"snack foods","Product_MRP":147.0,
+       "Store_Id":"OUT004","Store_Establishment_Year":2009,"Store_Size":"Medium",
+       "Store_Location_City_Type":"Tier 2","Store_Type":"Supermarket Type2"}'
+# → {"predictions":[3356.8719455112805]}
+```
+
+The Flask API, Streamlit UI and both Dockerfiles are real, reviewable files under
+[`05-superkart-sales-forecasting/deployment/`](05-superkart-sales-forecasting/deployment) —
+not strings inside a notebook.
+
+### On the numbers in this README
+
+Every metric below is taken from the committed notebook outputs. Where a result is inflated by a
+methodological flaw — test-set selection, resampling before the split, probable image leakage —
+the table says so, and each project's README carries a **Known Limitations** section spelling out
+exactly what is and is not trustworthy. Headline numbers without that context would be easy to
+write and impossible to defend.
+
 ---
 
 ## Projects
 
 | # | Project | Domain | Problem Type | Key Techniques | Headline Result |
 |:-:|---------|--------|--------------|----------------|-----------------|
-| 01 | **[FoodHub Order Analysis](01-foodhub-data-analysis)** | Food delivery | Exploratory data analysis | pandas, univariate/bivariate analysis, groupby aggregation, visual storytelling | Quantified demand drivers across 1.9K orders; identified 29% of revenue concentrated in high-value orders |
-| 02 | **[AllLife Bank Loan Targeting](02-alllife-bank-loan-targeting)** | Banking / marketing | Binary classification | Decision trees, cost-complexity (post) pruning, GridSearchCV pre-pruning, ROC-AUC | **98.9% accuracy, 0.997 ROC-AUC** with a post-pruned, fully interpretable tree |
-| 03 | **[EasyVisa Approval Prediction](03-easyvisa-approval-prediction)** | Immigration / HR | Binary classification | Bagging, Random Forest, AdaBoost, Gradient Boosting, XGBoost, class balancing, pipelines | **0.82 F1 / 0.87 recall** with a tuned Random Forest across 6 benchmarked models |
-| 04 | **[ReneWind Predictive Maintenance](04-renewind-predictive-maintenance)** | Renewable energy | Imbalanced classification | **Neural network implemented from scratch in NumPy** — SGD & Adam, dropout, class weighting | **0.8145 F1** at 98.2% accuracy on highly imbalanced turbine-failure data |
-| 05 | **[SuperKart Sales Forecasting](05-superkart-sales-forecasting)** | Retail | Regression + **deployment** | Random Forest, XGBoost, sklearn Pipelines, **Flask API, Streamlit UI, Docker, Hugging Face Spaces** | **R² 0.933, RMSE ≈ 277** — served through a deployable API and web UI |
-| 06 | **[HelmNet Helmet Detection](06-helmnet-helmet-detection)** | Workplace safety | Computer vision | CNNs from scratch, data augmentation, **VGG16 transfer learning**, OpenCV | **100% test accuracy** (95 held-out images) with VGG16 transfer learning |
-| 07 | **[Medical RAG Assistant](07-medical-rag-assistant)** | Healthcare / NLP | Retrieval-augmented generation | TF-IDF retrieval, nearest-neighbour search, prompt engineering, PDF corpus ingestion, groundedness evaluation | Grounded clinical Q&A with retrieval-depth (`k`) and prompt-variant ablations |
+| 01 | **[FoodHub Order Analysis](01-foodhub-data-analysis)** | Food delivery | Exploratory data analysis | pandas, univariate/bivariate analysis, groupby aggregation, commission-tier modelling | Demand and fulfilment patterns across **1,898 orders**; preparation time (≈27 min) exceeds delivery (≈24 min) |
+| 02 | **[AllLife Bank Loan Targeting](02-alllife-bank-loan-targeting)** | Banking / marketing | Binary classification | Decision trees, cost-complexity (post) pruning, GridSearchCV pre-pruning, ROC-AUC | Interpretable tree, **0.997 ROC-AUC**; headline accuracy is *test-set-selected* and the 9.6% base rate makes accuracy weak — see Known Limitations |
+| 03 | **[EasyVisa Approval Prediction](03-easyvisa-approval-prediction)** | Immigration / HR | Binary classification | Logistic Regression, Decision Tree, Random Forest, AdaBoost, Gradient Boosting, XGBoost, class balancing, pipelines | **0.817 test F1** (tuned Random Forest) across 6 benchmarked models and 3 class-balance regimes; resampling preceded the split, so tuned scores are leakage-inflated |
+| 04 | **[ReneWind Predictive Maintenance](04-renewind-predictive-maintenance)** | Renewable energy | Imbalanced classification | **Neural network implemented from scratch in NumPy** — manual backprop, SGD & Adam, dropout, class weighting | **0.8145 F1** at 0.944 precision / 0.716 recall; 7-model ablation, selected arm runs *unweighted* |
+| 05 | **[SuperKart Sales Forecasting](05-superkart-sales-forecasting)** | Retail | Regression + **live deployment** | Random Forest, XGBoost, sklearn Pipelines, **Flask API, Streamlit UI, Docker, Hugging Face Spaces** | **R² 0.933, RMSE ≈ 277** — and a **[live, callable API](https://kerolous-samir-superkart-backend.hf.space)** |
+| 06 | **[HelmNet Helmet Detection](06-helmnet-helmet-detection)** | Workplace safety | Computer vision | Custom CNN vs 3 **VGG16 transfer-learning** variants, augmentation, OpenCV | 95/95 on the test split — but three different architectures all scored flawlessly, which points to **near-duplicate leakage**, not generalisation |
+| 07 | **[Medical RAG Assistant](07-medical-rag-assistant)** | Healthcare / NLP | Retrieval prototype | TF-IDF + NearestNeighbors retrieval, PDF corpus ingestion, prompt & `k` ablations | Retriever works (**top-1 on 5/5 questions**); the generator is **not yet conditioned on retrieved context** — documented, not hidden |
 
 ---
 
@@ -42,14 +68,18 @@ Cross-validation · Class imbalance handling (under/over-sampling, class weights
 **Deep Learning** &nbsp;·&nbsp; TensorFlow / Keras · CNN architecture design · Transfer learning (VGG16) ·
 Dropout & regularisation · Data augmentation · Backpropagation implemented from first principles
 
-**NLP & GenAI** &nbsp;·&nbsp; Retrieval-augmented generation · TF-IDF & vector retrieval · Prompt engineering ·
-Transformers · Output groundedness/relevance evaluation
+**NLP & Retrieval** &nbsp;·&nbsp; TF-IDF retrieval · NearestNeighbors search · PDF corpus ingestion ·
+Prompt-variant and retrieval-depth ablations · Critical evaluation of retrieval/generation wiring
 
 **MLOps & Deployment** &nbsp;·&nbsp; Flask REST API · Streamlit · Docker · Hugging Face Spaces ·
-Model serialisation (joblib) · Reproducible environments
+Model serialisation (joblib) · Train/serve skew control (frozen training-time constants)
 
 **Visualisation & Communication** &nbsp;·&nbsp; Matplotlib · Seaborn · Translating model output into
 business recommendations
+
+**Evaluation & Rigour** &nbsp;·&nbsp; Identifying test-set selection and resampling leakage ·
+Recognising when accuracy misleads under class imbalance · Auditing one's own results and
+publishing the caveats
 
 ---
 
@@ -65,6 +95,13 @@ ai-ml-portfolio/
 ├── 03-easyvisa-approval-prediction/
 ├── 04-renewind-predictive-maintenance/
 ├── 05-superkart-sales-forecasting/
+│   ├── README.md
+│   ├── notebook.ipynb
+│   ├── report.html
+│   └── deployment/        # real, runnable service code
+│       ├── README.md      # live endpoint + API contract
+│       ├── backend/       # Flask API + Dockerfile
+│       └── frontend/      # Streamlit UI + Dockerfile
 ├── 06-helmnet-helmet-detection/
 ├── 07-medical-rag-assistant/
 ├── requirements.txt
