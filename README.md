@@ -155,6 +155,8 @@ jupyter lab
 > update that path to point at your own copy before re-running.
 
 ---
+These servers ran in production inside a multi-tenant virtualization platform before being extracted, de-branded and released here.
+---
 
 ## License
 
